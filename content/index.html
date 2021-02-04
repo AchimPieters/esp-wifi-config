@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>LifeCycle Manager 2</title>
   <style type="text/css">
@@ -9,6 +10,7 @@
       font-family: -apple-system, SF Pro Text, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
       color: #1d1d1f;
     }
+
     p {
       font-size: 1.41vw;
       line-height: 1.381;
@@ -16,6 +18,7 @@
       letter-spacing: .011em;
       text-align: justify;
     }
+
     h1 {
       font-size: 4.38vw;
       line-height: 1.07143;
@@ -23,24 +26,30 @@
       letter-spacing: -.028em;
       text-align: center;
     }
+
     sup {
       font-size: 1.0vw;
       font-weight: 100;
     }
+
     body .container {
       width: 15vw;
       margin: 0 auto;
       padding: 0.5vw;
     }
+
     label {
       display: block;
     }
+
     select {
       font-size: 1.41vw;
     }
+
     input[type=checkbox] {
       height: 1.41vw;
     }
+
     input[type=text],
     input[type=password] {
       width: 100%;
@@ -50,6 +59,7 @@
       -webkit-appearance: none;
       -webkit-border-radius: 0.55vw;
     }
+
     input[type=submit] {
       width: 100%;
       border: 0vw;
@@ -61,25 +71,31 @@
       -webkit-appearance: none;
       -webkit-border-radius: 0.55vw;
     }
+
     input[type=submit]#refresh {
       background-color: #0070c9;
     }
+
     input[type=submit]#join {
       background-color: #4caf50;
       margin-bottom: 1.56vw;
     }
+
     input[type=submit][disabled] {
       color: #aaa;
       background-color: #eee !important;
     }
+
     div.container {
       width: 50.15vw;
     }
+
     .networks {
       list-style: none;
       margin: 1em 0;
       padding: 0;
     }
+
     .networks li {
       cursor: pointer;
       padding: 0.25em;
@@ -92,49 +108,68 @@
       -webkit-appearance: none;
       -webkit-border-radius: 0.55vw;
     }
+
     .networks li.secure::before {
       content: "🔒 ";
       position: absolute;
       left: 0;
     }
+
     .networks li.selected {
       font-weight: bold;
       background-color: #ddd;
     }
+
     .networks li:hover {
       background-color: #eee;
     }
+
     .nonetworks {
       text-align: center;
       margin-bottom: 1em;
     }
+
     .field {
       margin-bottom: 0.5em;
     }
+
     .field.required label::before {
       content: "• ";
       color: red;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <h1>LifeCycle Manager <sup style="font-size: 2.19vw;"">2</sup></h1>
+    <h1>LifeCycle Manager <sup style="font-size: 2.19vw;">2</sup></h1>
     <p>Your device will automatically search for available Wi-Fi networks. Tap the name of the Wi-Fi network that you want to join. Before you can join the network, you may be asked to enter the network's password. If you don't see your network press
       search.</P>
-    <form action="/settings" method="get"> <input type="submit" id="refresh" value="Search" /></form>
+    <form action=" /settings" method="get">
+      <input type="submit" id="refresh" value="Search" />
+    </form>
     <form action="/settings" method="post">
-      <ul class="networks"> {% for network in networks %}<li class="{{ network.secure | ternary('secure', 'unsecure') }}">{{ network.ssid }}</li> {% endfor %}</ul>
-      <div class="nonetworks" style="display: none;"> No networks found</div>
+      <ul class="networks">
+        <!-- part HTML_NETWORK_ITEM -->
+        {% for network in networks %}
+        <li class="{{ network.secure | ternary('secure', 'unsecure') }}">{{ network.ssid }}</li>
+        {% endfor %}
+        <!-- part HTML_SETTINGS_MIDDLE -->
+      </ul>
+      <div class="nonetworks" style="display: none;">
+        No networks found
+      </div>
       <div class="field required ssid" style="display: none;"> <label for="ssid">SSID:</label> <input type="text" id="ssid" placeholder="Type your network name here" /></div>
       <div class="field required password" style="display: none;"> <label for="password">Password:</label> <input type="password" id="password" placeholder="••••••••••••" /></div> <br> <br>
       <h1>Repository Settings</h1>
       <p>A repository contains all Project files, Binary files, Instructions, including the revision history. By default this is a GitHub Repository.</p>
+<!-- part HTML_SETTINGS_OTAPARAMETERS -->
       <div class="field otarepo" style="display: block;"> <label for="otarepo">Repository:</label> <input type="text" id="otarepo" name="otarepo" placeholder="Owner_name/Repository_name" /></div>
       <div class="field otafile" style="display: block;"> <label for="otafile">Binary file:</label> <input type="text" id="otafile" name="otafile" placeholder="e.g main.bin" /></div> <br> <br>
       <h1>Advanced Settings</h1>
       <p>Advanced settings (for advanced users only). If you don't know what these options do, leaf them by default and press the Join button below. For more information, see the read.me file</p>
-      <div class="field led_pin" style="display: block;"> Enable LED <label style="float: right" for="led_pol"> <input name="led_pol" type="hidden" value="0" /> <input type="checkbox" value="1" name="led_pol" id="led_pol" /> </label> <br> <br> Select
+      <div class="field led_pin" style="display: block;"> Enable LED <label style="float: right" for="led_pol"> <input name="led_pol" type="hidden" value="0" /> <input type="checkbox" value="1" name="led_pol" id="led_pol" /> </label> <br> <br>
+        Select
         the LED GPIO pin <label style="float: right" for="led_pin"> <select name="led_pin" id="led_pin">
             <option value="n">DISABLED</option>
             <option value="2">GPIO2</option>
@@ -149,8 +184,10 @@
       </div> <br> <br>
       <h1>Alternative Server</h1>
       <p>The advanced features of a Alternative Server make it easy for you to take control of your organization’s hardware and software. So you can set up and manage every device more effectively.</p>
+<!-- part HTML_SETTINGS_OTASERVER -->
       <div class="field otasrvr" style="display: block;"> <label for="otasrvr">Server URL:</label> <input type="text" id="otasrvr" name="otasrvr" placeholder="Alternative_Server.com/Directory" /></div> <br> <br> <br> <br> <input type="submit"
         id="join" value="Join" disabled /> <br> <br>
+<!-- part HTML_SETTINGS_FOOTER -->
       <p style="text-align: center;"><sup><sup>LifeCycle manger 2 | Copyright © 2021 HomeACcessoryKid - HacK | Apache License, Version 2.0 <br> UI Design | Copyright © 2021 <b>Studio</b>Pieters<b>®</b> | All rights reserved.</sup></sup></p>
     </form>
   </div>
@@ -167,18 +204,23 @@
       show(password_block);
       password_block.classList.remove('required');
     }
+
     function enable(e) {
       e.disabled = '';
     }
+
     function disable(e) {
       e.disabled = 'disabled';
     }
+
     function show(e) {
       e.style.display = 'block';
     }
+
     function hide(e) {
       e.style.display = 'none';
     }
+
     function selectNetwork(e) {
       let nets = document.querySelectorAll('ul.networks li');
       for (var i = 0; i < nets.length; i++) {
